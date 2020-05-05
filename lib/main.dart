@@ -111,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                DetailsPage(posts[position])));
+                                DetailsPage(posts[position]),),);
                   },
                   child: BlogCard(
                     title: posts[position].title.rendered,
