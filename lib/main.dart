@@ -82,19 +82,13 @@ class _MyHomePageState extends State<MyHomePage> {
           'Home',
           style: TextStyle(fontWeight: FontWeight.w400),
         ),
-        backgroundColor: Colors.black,
+        backgroundColor: Color.fromRGBO(37, 170, 226, 1),
         actions: <Widget>[
           Padding(
               padding: EdgeInsets.only(right: 20.0),
               child: Icon(
                 Icons.notifications,
-                color: Colors.grey,
-              )),
-          Padding(
-              padding: EdgeInsets.only(right: 12.0),
-              child: Icon(
-                Icons.search,
-                color: Colors.grey,
+                color: Colors.white,
               )),
         ],
       ),
@@ -108,10 +102,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 return InkWell(
                   onTap: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                DetailsPage(posts[position]),),);
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DetailsPage(posts[position]),
+                      ),
+                    );
                   },
                   child: BlogCard(
                     title: posts[position].title.rendered,

@@ -22,7 +22,7 @@ class DetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Color.fromRGBO(37, 170, 226, 1),
         iconTheme: IconThemeData(color: Colors.blue),
       ),
       body: Container(
