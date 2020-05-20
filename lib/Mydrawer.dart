@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_share/flutter_share.dart';
 
 class MyDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Future<void> share() async {
+      await FlutterShare.share(
+          title: 'Example share',
+          text: 'Example share text',
+          linkUrl: 'https://flutter.dev/',
+          chooserTitle: 'Example Chooser Title');
+    }
+
     return Drawer(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -89,11 +98,19 @@ class MyDrawer extends StatelessWidget {
                         style: TextStyle(fontSize: 18.0),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        "Drafts",
-                        style: TextStyle(fontSize: 18.0),
+                    FlatButton(
+                      onPressed: share,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Icon(Icons.share),
+                            Text(
+                              "Share",
+                              style: TextStyle(fontSize: 18.0),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],

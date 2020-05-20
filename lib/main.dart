@@ -2,6 +2,7 @@ import 'package:blogkori/Mydrawer.dart';
 import 'package:blogkori/innerPage.dart';
 import 'package:blogkori/models/postModel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_wordpress/flutter_wordpress.dart' as wp;
 import 'package:intl/intl.dart';
@@ -79,11 +80,31 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Home',
-          style: TextStyle(fontWeight: FontWeight.w400),
+        title: Row(
+          children: [
+            Image.asset(
+              'assets/icon.png',
+              height: 35,
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "BlogKori",
+                  style: TextStyle(color: Colors.black),
+                ),
+                Text(
+                  "Helping commoners build passive income online",
+                  style: TextStyle(color: Colors.black, fontSize: 8),
+                )
+              ],
+            ),
+          ],
         ),
-        backgroundColor: Color.fromRGBO(37, 170, 226, 1),
+        backgroundColor: Colors.white12,
         actions: <Widget>[
           Padding(
               padding: EdgeInsets.only(right: 20.0),
@@ -161,10 +182,15 @@ class BlogCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(
-                    author.replaceAll("<p>", "").replaceAll("</p>", ""),
-                    style: TextStyle(fontSize: 18.0),
-                  ),
+                  Html(data: author)
+                  // Text(
+                  //   author
+                  //       .replaceAll("<p>", "")
+                  //       .replaceAll("</p>", "")
+                  //       .replaceAll("&#8217;", "'"),
+                  //   style: TextStyle(fontSize: 18.0),
+                  // ),
+                  ,
                   Padding(
                     padding: EdgeInsets.only(top: 10.0),
                     child: Text(
