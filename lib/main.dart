@@ -4,6 +4,7 @@ import 'package:blogkori/models/postModel.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_wordpress/flutter_wordpress.dart' as wp;
+import 'package:intl/intl.dart';
 
 void main() {
   runApp(MyApp());
@@ -110,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   },
                   child: BlogCard(
                     title: posts[position].title.rendered,
-                    author: posts[position].modifiedBy,
+                    author: posts[position].excerpt.rendered,
                     date: posts[position].date,
                   ),
                 );
@@ -143,64 +144,38 @@ class BlogCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(
-                title,
-                style: TextStyle(
-                    color: Colors.black38,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16.0),
-              ),
+              // Text(
+              //   title,
+              //   style: TextStyle(
+              //       color: Colors.black38,
+              //       fontWeight: FontWeight.w500,
+              //       fontSize: 16.0),
+              // ),
               Padding(
                 padding: EdgeInsets.fromLTRB(0.0, 12.0, 0.0, 12.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Flexible(
-                      child: Text(
-                        title,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 22.0),
-                      ),
-                      flex: 3,
-                    ),
-                    Flexible(
-                      flex: 1,
-                      child: Container(
-                        height: 80.0,
-                        width: 80.0,
-                        child: Image.asset(
-                          "assets/" + imageAssetName,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    )
-                  ],
+                child: Text(
+                  title,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22.0),
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        author,
-                        style: TextStyle(fontSize: 18.0),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 10.0),
-                        child: Text(
-                          date + " . " + readTime,
-                          style: TextStyle(
-                              color: Colors.black45,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                    ],
+                  Text(
+                    author.replaceAll("<p>", "").replaceAll("</p>", ""),
+                    style: TextStyle(fontSize: 18.0),
                   ),
-                  Icon(Icons.bookmark_border)
+                  Padding(
+                    padding: EdgeInsets.only(top: 10.0),
+                    child: Text(
+                      DateFormat.yMMMMEEEEd().format(DateTime.parse(date)),
+                      style: TextStyle(
+                          color: Colors.black45, fontWeight: FontWeight.w500),
+                    ),
+                  ),
                 ],
-              )
+              ),
+              //Icon(Icons.bookmark_border)
             ],
           ),
         ),
