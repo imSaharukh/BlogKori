@@ -7,6 +7,8 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_wordpress/flutter_wordpress.dart' as wp;
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:connectivity/connectivity.dart';
 
 void main() {
   runApp(MyApp());
@@ -36,17 +38,43 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  bool isOffline = false;
   List<Posts> posts = [];
   Future getdata() async {
-    var url = "https://blogkori.com/wp-json/wp/v2/posts?per_page=100";
-    http.Response response = await http.get(url);
-
-    if (response.statusCode == 200) {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none) {
+      // No internet
       setState(() {
-        posts = dataFromJson(response.body);
+        isOffline = true;
       });
+      debugPrint("No internet");
+      SharedPreferences prefs = await SharedPreferences.getInstance();
 
-      print(posts);
+      bool checkValue = prefs.containsKey('posts');
+      if (checkValue) {
+        String stringValue = prefs.getString('posts');
+        setState(() {
+          posts = dataFromJson(stringValue);
+        });
+      } else {
+        debugPrint("No internet no offline data");
+      }
+    } else {
+      debugPrint(" internet");
+      var url = "https://blogkori.com/wp-json/wp/v2/posts?per_page=100";
+      http.Response response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        setState(() {
+          posts = dataFromJson(response.body);
+        });
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString('posts', response.body);
+        print(posts);
+      }
+      setState(() {
+        isOffline = false;
+      });
     }
   }
 
@@ -122,26 +150,37 @@ class _MyHomePageState extends State<MyHomePage> {
       drawer: MyDrawer(),
       body: posts.isEmpty
           ? Center(child: CircularProgressIndicator())
-          : ListView.builder(
-              itemCount: posts.length,
-              itemBuilder: (context, position) {
-                //NewArticle article = NewsHelper.getArticle(position);
-                return InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => DetailsPage(posts[position]),
-                      ),
-                    );
-                  },
-                  child: BlogCard(
-                    title: posts[position].title.rendered,
-                    author: posts[position].excerpt.rendered,
-                    date: posts[position].date,
+          : Column(
+              children: [
+                isOffline
+                    ? Text("Offline Mode")
+                    : Container(color: Colors.white // This is optional
+                        ),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: posts.length,
+                    itemBuilder: (context, position) {
+                      //NewArticle article = NewsHelper.getArticle(position);
+                      return InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  DetailsPage(posts[position]),
+                            ),
+                          );
+                        },
+                        child: BlogCard(
+                          title: posts[position].title.rendered,
+                          author: posts[position].excerpt.rendered,
+                          date: posts[position].date,
+                        ),
+                      );
+                    },
                   ),
-                );
-              },
+                ),
+              ],
             ),
     );
   }
