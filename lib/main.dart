@@ -2,6 +2,7 @@ import 'package:blogkori/Mydrawer.dart';
 import 'package:blogkori/innerPage.dart';
 import 'package:blogkori/models/postModel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_wordpress/flutter_wordpress.dart' as wp;
@@ -14,6 +15,10 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return MaterialApp(
       title: 'Home',
       theme: ThemeData(
