@@ -38,7 +38,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   List<Posts> posts = [];
   Future getdata() async {
-    var url = "https://blogkori.com/wp-json/wp/v2/posts";
+    var url = "https://blogkori.com/wp-json/wp/v2/posts?per_page=100";
     http.Response response = await http.get(url);
 
     if (response.statusCode == 200) {
