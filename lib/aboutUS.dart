@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -139,9 +140,19 @@ class AboutUs extends StatelessWidget {
                     radius: 40,
                     backgroundColor: Colors.grey,
                     child: CircleAvatar(
-                        radius: 35.0,
-                        backgroundImage: NetworkImage(
-                            "https://avatars3.githubusercontent.com/u/25554766?s=460&u=f47cbcd77c798f5b238778b3e99bcb9abec6e280&v=4")))),
+                      radius: 35.0,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: CachedNetworkImage(
+                          imageUrl:
+                              "https://avatars3.githubusercontent.com/u/25554766?s=460&u=f47cbcd77c798f5b238778b3e99bcb9abec6e280&v=4",
+                          placeholder: (context, url) =>
+                              new CircularProgressIndicator(),
+                          errorWidget: (context, url, error) =>
+                              new Icon(Icons.error),
+                        ),
+                      ),
+                    ))),
             SizedBox(width: 20.0),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,

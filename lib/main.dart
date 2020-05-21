@@ -8,6 +8,7 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_wordpress/flutter_wordpress.dart' as wp;
 import 'package:intl/intl.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:connectivity/connectivity.dart';
 
@@ -151,10 +152,10 @@ class _MyHomePageState extends State<MyHomePage> {
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  DetailsPage(posts[position], posts),
-                            ),
+                            PageTransition(
+                                duration: Duration(milliseconds: 750),
+                                type: PageTransitionType.leftToRight,
+                                child: DetailsPage(posts[position], posts)),
                           );
                         },
                         child: BlogCard(

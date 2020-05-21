@@ -5,10 +5,12 @@ import 'package:blogkori/webview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clipboard_manager/flutter_clipboard_manager.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_share/flutter_share.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:page_transition/page_transition.dart';
 
 class DetailsPage extends StatelessWidget {
   final Posts post;
@@ -24,21 +26,37 @@ class DetailsPage extends StatelessWidget {
 
       Navigator.push(
         context,
-        MaterialPageRoute(
-          builder: (context) => DetailsPage(links.first, allPostes),
-        ),
+        PageTransition(
+            type: PageTransitionType.leftToRight,
+            duration: Duration(seconds: 1),
+            child: DetailsPage(links.first, allPostes)),
       );
     } catch (e) {
-      Navigator.of(context).push(MaterialPageRoute(
-          builder: (BuildContext context) => MyWebView(
+      if (!(link.contains("#"))) {
+        Navigator.push(
+          context,
+          PageTransition(
+              type: PageTransitionType.leftToRight,
+              duration: Duration(seconds: 1),
+              child: MyWebView(
                 title: "BlogKori",
                 selectedUrl: link,
-              )));
+              )),
+        );
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    Future<void> share() async {
+      await FlutterShare.share(
+          title: 'BlogKori',
+          text: post.title.rendered,
+          linkUrl: post.link,
+          chooserTitle: post.title.rendered);
+    }
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -67,7 +85,7 @@ class DetailsPage extends StatelessWidget {
                 FontAwesomeIcons.shareAlt,
                 color: Colors.grey,
               ),
-              onPressed: null)
+              onPressed: share)
         ],
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: Colors.grey),
