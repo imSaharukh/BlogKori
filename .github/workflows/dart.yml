@@ -51,7 +51,7 @@ jobs:
       - run: sudo apt install -y neofetch;neofetch
       - run: df -h
       - run: flutter pub get
-      - run: flutter test
+      # - run: flutter test
       - run: flutter build apk --release --split-per-abi
       - run: flutter build appbundle
       - name: Create a Release in GitHub
