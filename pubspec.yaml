@@ -36,8 +36,8 @@ dependencies:
   webview_flutter: ^0.3.22
   flutter_share: ^1.0.2+1
   shared_preferences: ^0.5.7+2
-  connectivity: ^0.4.8+6
-  font_awesome_flutter: ^8.8.1
+  connectivity:
+  font_awesome_flutter:
   clipboard_manager: ^0.0.4
   fluttertoast: ^4.0.1
 dev_dependencies:

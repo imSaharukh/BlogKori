@@ -1,4 +1,5 @@
 import 'package:blogkori/models/postModel.dart';
+import 'package:blogkori/poststatic.dart';
 import 'package:blogkori/webview.dart';
 import 'package:clipboard_manager/clipboard_manager.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +11,30 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 class DetailsPage extends StatelessWidget {
   final Posts post;
+  final List allPostes;
+  DetailsPage(this.post, this.allPostes);
+  _launchUrl(String link, BuildContext context) async {
+    // allPostes.where((element) => false);
+    try {
+      Iterable<Posts> links = allPostes.where((posts) => posts.link == link);
+      debugPrint(
+        "web" + links.first.link,
+      );
 
-  DetailsPage(this.post);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => DetailsPage(links.first, allPostes),
+        ),
+      );
+    } catch (e) {
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (BuildContext context) => MyWebView(
+                title: "BlogKori",
+                selectedUrl: link,
+              )));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -138,12 +161,4 @@ class DetailsPage extends StatelessWidget {
       )),
     );
   }
-}
-
-_launchUrl(String link, BuildContext context) async {
-  Navigator.of(context).push(MaterialPageRoute(
-      builder: (BuildContext context) => MyWebView(
-            title: "BlogKori",
-            selectedUrl: link,
-          )));
 }
