@@ -4,6 +4,7 @@ import 'package:blogkori/models/postModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
+
 import 'package:http/http.dart' as http;
 import 'package:flutter_wordpress/flutter_wordpress.dart' as wp;
 import 'package:intl/intl.dart';
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
     return MaterialApp(
-      title: 'Home',
+      title: 'BlogKori',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -86,13 +87,19 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final _scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
+        elevation: 1,
         title: Row(
           children: [
-            Image.asset(
-              'assets/icon.png',
-              height: 35,
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10.0),
+              child: Image.asset(
+                'assets/icon.png',
+                height: 35,
+              ),
             ),
             SizedBox(
               width: 10,
@@ -106,23 +113,27 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 Text(
                   "Helping commoners build passive income online",
-                  style: TextStyle(color: Colors.black, fontSize: 8),
+                  style: TextStyle(color: Colors.black, fontSize: 10),
                 )
               ],
             ),
           ],
         ),
-        backgroundColor: Colors.white12,
+        backgroundColor: Colors.white,
         actions: <Widget>[
           Padding(
               padding: EdgeInsets.only(right: 20.0),
-              child: Icon(
-                Icons.notifications,
-                color: Colors.white,
-              )),
+              child: IconButton(
+                  icon: Icon(
+                    Icons.menu,
+                    color: Colors.blue,
+                  ),
+                  onPressed: () {
+                    _scaffoldKey.currentState.openEndDrawer();
+                  })),
         ],
       ),
-      drawer: MyDrawer(),
+      endDrawer: MyDrawer(),
       body: posts.isEmpty
           ? Center(child: CircularProgressIndicator())
           : Column(
@@ -149,7 +160,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: BlogCard(
                           title: posts[position].title.rendered,
                           author: posts[position].excerpt.rendered,
-                          date: posts[position].date,
+                          date: posts[position].modified,
                         ),
                       );
                     },
@@ -169,61 +180,41 @@ class BlogCard extends StatelessWidget {
   });
 
   final String title;
-  final String categoryTitle = "random";
   final String author;
   final String date;
-  final String readTime = "5 min";
-  final String imageAssetName = "cars.jpg";
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.fromLTRB(0.0, 0.5, 0.0, 0.5),
-      child: Card(
-        child: Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              // Text(
-              //   title,
-              //   style: TextStyle(
-              //       color: Colors.black38,
-              //       fontWeight: FontWeight.w500,
-              //       fontSize: 16.0),
-              // ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(0.0, 12.0, 0.0, 12.0),
-                child: Text(
-                  title,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22.0),
-                ),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Html(data: author)
-                  // Text(
-                  //   author
-                  //       .replaceAll("<p>", "")
-                  //       .replaceAll("</p>", "")
-                  //       .replaceAll("&#8217;", "'"),
-                  //   style: TextStyle(fontSize: 18.0),
-                  // ),
-                  ,
-                  Padding(
-                    padding: EdgeInsets.only(top: 10.0),
-                    child: Text(
-                      DateFormat.yMMMMEEEEd().format(DateTime.parse(date)),
-                      style: TextStyle(
-                          color: Colors.black45, fontWeight: FontWeight.w500),
-                    ),
+    return Container(
+      child: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0.0, 12.0, 0.0, 12.0),
+                  child: Text(
+                    title,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30.0,
+                        height: 1.3,
+                        color: Color.fromRGBO(51, 51, 51, 1)),
                   ),
-                ],
-              ),
-              //Icon(Icons.bookmark_border)
-            ],
+                ),
+                Html(
+                  data: author,
+                  defaultTextStyle: TextStyle(fontSize: 17, height: 1.6),
+                ),
+              ],
+            ),
           ),
-        ),
+          Divider(
+            height: 5,
+          )
+        ],
       ),
     );
   }

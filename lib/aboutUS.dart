@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AboutUs extends StatelessWidget {
@@ -23,7 +24,10 @@ class AboutUs extends StatelessWidget {
                   padding: const EdgeInsets.all(16.0),
                   decoration: BoxDecoration(color: Colors.grey.shade200),
                   child: Text(
-                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."),
+                    "Hey there, my name is Tamal Anwar Chowdhury and I am the man behind this blog. I have been blogging since 2008 and helped thousands of my readers with blogging tips and advice.",
+                    style: GoogleFonts.montserrat(
+                        textStyle: TextStyle(fontSize: 17), height: 1.6),
+                  ),
                 ),
                 const SizedBox(height: 20.0),
                 MaterialButton(
@@ -59,7 +63,7 @@ class AboutUs extends StatelessWidget {
                 ),
                 SizedBox(height: 20.0),
                 MaterialButton(
-                  color: Colors.grey.shade200,
+                  color: Color.fromRGBO(239, 239, 239, 1),
                   padding: const EdgeInsets.all(16.0),
                   onPressed: () async {
                     // if(await canLaunch(fb))
