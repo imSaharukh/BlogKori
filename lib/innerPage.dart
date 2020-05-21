@@ -1,8 +1,9 @@
 import 'package:blogkori/models/postModel.dart';
 import 'package:blogkori/poststatic.dart';
 import 'package:blogkori/webview.dart';
-import 'package:clipboard_manager/clipboard_manager.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_clipboard_manager/flutter_clipboard_manager.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -49,7 +50,8 @@ class DetailsPage extends StatelessWidget {
                 color: Colors.grey,
               ),
               onPressed: () {
-                ClipboardManager.copyToClipBoard(post.link).then((result) {
+                FlutterClipboardManager.copyToClipBoard(post.link)
+                    .then((result) {
                   Fluttertoast.showToast(
                       msg: "Link Copied to clipboard",
                       toastLength: Toast.LENGTH_SHORT,

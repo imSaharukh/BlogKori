@@ -38,7 +38,7 @@ dependencies:
   shared_preferences: ^0.5.7+2
   connectivity:
   font_awesome_flutter:
-  clipboard_manager: ^0.0.4
+  flutter_clipboard_manager: ^0.0.2
   fluttertoast: ^4.0.1
 dev_dependencies:
   flutter_test:
