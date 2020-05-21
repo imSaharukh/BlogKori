@@ -24,7 +24,7 @@ class DetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(239, 239, 239, 1),
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(37, 170, 226, 1),
         iconTheme: IconThemeData(color: Colors.blue),
@@ -54,8 +54,8 @@ class DetailsPage extends StatelessWidget {
             ),
             Html(
               linkStyle: TextStyle(color: Color.fromRGBO(33, 152, 244, 1)),
-              defaultTextStyle:
-                  GoogleFonts.montserrat(textStyle: TextStyle(fontSize: 15)),
+              defaultTextStyle: GoogleFonts.montserrat(
+                  textStyle: TextStyle(fontSize: 17), height: 1.6),
               data: post.content.rendered,
               onLinkTap: (String url) {
                 _launchUrl(url, context);

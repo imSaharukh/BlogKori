@@ -1,3 +1,4 @@
+import 'package:blogkori/aboutUS.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
 
@@ -91,11 +92,21 @@ class MyDrawer extends StatelessWidget {
                         style: TextStyle(fontSize: 18.0),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        "Stats",
-                        style: TextStyle(fontSize: 18.0),
+                    FlatButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AboutUs(),
+                          ),
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "About US",
+                          style: TextStyle(fontSize: 18.0),
+                        ),
                       ),
                     ),
                     FlatButton(
