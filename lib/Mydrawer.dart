@@ -1,6 +1,7 @@
 import 'package:blogkori/aboutUS.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -8,10 +9,11 @@ class MyDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     Future<void> share() async {
       await FlutterShare.share(
-          title: 'Example share',
-          text: 'Example share text',
-          linkUrl: 'https://flutter.dev/',
-          chooserTitle: 'Example Chooser Title');
+          title: 'BlogKori',
+          text: 'BlogKori',
+          linkUrl:
+              'https://blogkori.com/?utm_source=blogkori_app&utm_medium=app&utm_campaign=about_screen ',
+          chooserTitle: 'BlogKori');
     }
 
     return Drawer(
@@ -64,18 +66,16 @@ class MyDrawer extends StatelessWidget {
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                              builder: (context) => AboutUs(),
-                            ),
+                            PageTransition(
+                                child: AboutUs(),
+                                type: PageTransitionType.rightToLeft),
                           );
                         },
-                        child: InkWell(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "About ",
-                              style: TextStyle(fontSize: 18.0),
-                            ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "About ",
+                            style: TextStyle(fontSize: 18.0),
                           ),
                         ),
                       ),

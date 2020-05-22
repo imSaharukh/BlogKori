@@ -5,11 +5,11 @@ import 'package:blogkori/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:http/http.dart' as http;
-import 'package:flutter_wordpress/flutter_wordpress.dart' as wp;
-import 'package:intl/intl.dart';
+
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:connectivity/connectivity.dart';
@@ -47,6 +47,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  ScrollController _scrollController = new ScrollController();
   bool isOffline = false;
   List<Posts> posts = [];
   Future getdata() async {
@@ -99,46 +100,55 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         elevation: 1,
-        title: Row(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10.0),
-              child: Image.asset(
-                'assets/icon.png',
-                height: 35,
-              ),
-            ),
-            SizedBox(
-              width: 10,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "BlogKori",
-                  style: TextStyle(color: Colors.black),
+        title: InkWell(
+          onTap: () {
+            _scrollController.animateTo(
+              0.0,
+              curve: Curves.easeOut,
+              duration: const Duration(milliseconds: 300),
+            );
+          },
+          child: Row(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10.0),
+                child: Image.asset(
+                  'assets/icon.png',
+                  height: 35,
                 ),
-                Text(
-                  "Helping commoners build passive income online",
-                  style: TextStyle(color: Colors.black, fontSize: 10),
-                )
-              ],
-            ),
-          ],
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "BlogKori",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  Text(
+                    "Helping commoners build passive income online",
+                    style: TextStyle(color: Colors.black, fontSize: 10),
+                  )
+                ],
+              ),
+            ],
+          ),
         ),
         backgroundColor: Colors.white,
         actions: <Widget>[
-          Padding(
-              padding: EdgeInsets.only(right: 20.0),
-              child: IconButton(
-                  icon: Icon(
-                    Icons.menu,
-                    color: Colors.blue,
-                  ),
-                  onPressed: () {
-                    _scaffoldKey.currentState.openEndDrawer();
-                  })),
+          IconButton(
+              iconSize: 30,
+              icon: Icon(
+                Icons.menu,
+                color: Colors.blue,
+              ),
+              onPressed: () {
+                _scaffoldKey.currentState.openEndDrawer();
+              }),
         ],
       ),
       endDrawer: MyDrawer(),
@@ -146,12 +156,9 @@ class _MyHomePageState extends State<MyHomePage> {
           ? Center(child: CircularProgressIndicator())
           : Column(
               children: [
-                isOffline
-                    ? Text("Offline Mode")
-                    : Container(color: Colors.white // This is optional
-                        ),
                 Expanded(
                   child: ListView.builder(
+                    controller: _scrollController,
                     itemCount: posts.length,
                     itemBuilder: (context, position) {
                       //NewArticle article = NewsHelper.getArticle(position);
@@ -161,7 +168,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             context,
                             PageTransition(
                                 duration: Duration(milliseconds: 250),
-                                type: PageTransitionType.leftToRight,
+                                type: PageTransitionType.rightToLeft,
                                 child: DetailsPage(posts[position], posts)),
                           );
                         },
@@ -176,6 +183,27 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ],
             ),
+      bottomNavigationBar: isOffline
+          ? Container(
+              color: Colors.grey,
+              child: Text(
+                "Offline Mode",
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.white),
+              ),
+            )
+          : Container(
+              height: 0, // This is optional
+            ),
+      floatingActionButton: FloatingActionButton(
+          child: Icon(FontAwesomeIcons.arrowUp),
+          onPressed: () {
+            _scrollController.animateTo(
+              0.0,
+              curve: Curves.easeOut,
+              duration: const Duration(milliseconds: 300),
+            );
+          }),
     );
   }
 }

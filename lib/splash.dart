@@ -1,6 +1,5 @@
 import 'package:blogkori/custom/pump.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -10,7 +9,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    Future.delayed(Duration(seconds: 2), () async {
+    Future.delayed(Duration(milliseconds: 500), () async {
       Navigator.of(context).pushReplacementNamed("/home");
     });
     super.initState();
@@ -25,16 +24,12 @@ class _SplashScreenState extends State<SplashScreen> {
         children: <Widget>[
           PumpingHeart(
             image: Container(
-              height: 100,
+              height: 100 * .75,
               decoration: BoxDecoration(
                 image: DecorationImage(image: AssetImage("assets/icon.png")),
                 borderRadius: BorderRadius.all(Radius.circular(100)),
               ),
             ),
-          ),
-          SpinKitThreeBounce(
-            color: Colors.blue,
-            size: 50.0,
           ),
         ],
       ),
