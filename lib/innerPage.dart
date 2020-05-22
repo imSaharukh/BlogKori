@@ -28,7 +28,7 @@ class DetailsPage extends StatelessWidget {
         context,
         PageTransition(
             type: PageTransitionType.leftToRight,
-            duration: Duration(seconds: 1),
+            duration: Duration(milliseconds: 250),
             child: DetailsPage(links.first, allPostes)),
       );
     } catch (e) {
@@ -37,7 +37,7 @@ class DetailsPage extends StatelessWidget {
           context,
           PageTransition(
               type: PageTransitionType.leftToRight,
-              duration: Duration(seconds: 1),
+              duration: Duration(milliseconds: 250),
               child: MyWebView(
                 title: "BlogKori",
                 selectedUrl: link,
@@ -114,7 +114,7 @@ class DetailsPage extends StatelessWidget {
                 child: Text(
                   "Last Updated on " +
                       DateFormat.yMMMMEEEEd().format(
-                        DateTime.parse(post.date),
+                        DateTime.parse(post.modified),
                       ),
                   style: TextStyle(
                       fontSize: 14, color: Color.fromRGBO(85, 85, 85, 1)),

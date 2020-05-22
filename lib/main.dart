@@ -1,9 +1,11 @@
 import 'package:blogkori/Mydrawer.dart';
 import 'package:blogkori/innerPage.dart';
 import 'package:blogkori/models/postModel.dart';
+import 'package:blogkori/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:flutter_wordpress/flutter_wordpress.dart' as wp;
@@ -24,11 +26,16 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
     return MaterialApp(
+      routes: {
+        // When navigating to the "/" route, build the FirstScreen widget.
+        '/': (context) => SplashScreen(),
+
+        '/home': (context) => MyHomePage(),
+      },
       title: 'BlogKori',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -153,7 +160,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           Navigator.push(
                             context,
                             PageTransition(
-                                duration: Duration(milliseconds: 750),
+                                duration: Duration(milliseconds: 250),
                                 type: PageTransitionType.leftToRight,
                                 child: DetailsPage(posts[position], posts)),
                           );
@@ -198,16 +205,18 @@ class BlogCard extends StatelessWidget {
                   padding: EdgeInsets.fromLTRB(0.0, 12.0, 0.0, 12.0),
                   child: Text(
                     title,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30.0,
-                        height: 1.3,
-                        color: Color.fromRGBO(51, 51, 51, 1)),
+                    style: GoogleFonts.raleway(
+                        textStyle: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30.0,
+                            height: 1.3,
+                            color: Color.fromRGBO(51, 51, 51, 1))),
                   ),
                 ),
                 Html(
                   data: author,
-                  defaultTextStyle: TextStyle(fontSize: 17, height: 1.6),
+                  defaultTextStyle: GoogleFonts.montserrat(
+                      textStyle: TextStyle(fontSize: 17), height: 1.6),
                 ),
               ],
             ),
