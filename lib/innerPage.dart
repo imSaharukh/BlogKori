@@ -23,20 +23,13 @@ class DetailsPage extends StatelessWidget {
     try {
       await ct.launch(
         link,
-        option: new ct.CustomTabsOption(
-          toolbarColor: Theme.of(context).primaryColor,
+        option: ct.CustomTabsOption(
+          toolbarColor: Colors.blue,
           enableDefaultShare: true,
           enableUrlBarHiding: true,
           showPageTitle: true,
-          animation: new ct.CustomTabsAnimation.slideIn()
-          // or user defined animation.
-          // animation: new ct.CustomTabsAnimation(
-          //   startEnter: 'slide_up',
-          //   startExit: 'android:anim/fade_out',
-          //   endEnter: 'android:anim/fade_in',
-          //   endExit: 'slide_down',
-          // )
-          ,
+          enableInstantApps: true,
+          animation: ct.CustomTabsAnimation.slideIn(),
           extraCustomTabs: <String>[
             // ref. https://play.google.com/store/apps/details?id=org.mozilla.firefox
             'org.mozilla.firefox',
