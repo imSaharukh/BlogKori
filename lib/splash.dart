@@ -1,4 +1,3 @@
-import 'package:blogkori/custom/pump.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -19,19 +18,14 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromRGBO(37, 170, 226, 1),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          PumpingHeart(
-            image: Container(
-              height: 100 * .75,
-              decoration: BoxDecoration(
-                image: DecorationImage(image: AssetImage("assets/icon.png")),
-                borderRadius: BorderRadius.all(Radius.circular(100)),
-              ),
-            ),
+      body: Center(
+        child: Container(
+          height: 100 * .75,
+          decoration: BoxDecoration(
+            image: DecorationImage(image: AssetImage("assets/icon.png")),
+            borderRadius: BorderRadius.all(Radius.circular(100)),
           ),
-        ],
+        ),
       ),
     );
   }

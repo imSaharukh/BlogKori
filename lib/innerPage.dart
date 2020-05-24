@@ -168,8 +168,16 @@ class DetailsPage extends StatelessWidget {
                 _launchUrl(url, context);
               },
             ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              "(To leave a comment, please visit the main website)",
+              style: GoogleFonts.montserrat(
+                  textStyle: TextStyle(fontSize: 17), height: 1.6),
+            ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 30),
+              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 70),
               child: Row(
                 children: [
                   Expanded(

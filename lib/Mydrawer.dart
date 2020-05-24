@@ -11,8 +11,7 @@ class MyDrawer extends StatelessWidget {
       await FlutterShare.share(
           title: 'BlogKori',
           text: 'BlogKori',
-          linkUrl:
-              'https://blogkori.com/?utm_source=blogkori_app&utm_medium=app&utm_campaign=about_screen ',
+          linkUrl: 'https://blogkori.com/',
           chooserTitle: 'BlogKori');
     }
 
@@ -41,7 +40,7 @@ class MyDrawer extends StatelessWidget {
                     ),
                     Padding(
                         padding: EdgeInsets.all(8.0),
-                        child: Text("v 1.0",
+                        child: Text("v 1.1.1",
                             style: TextStyle(color: Colors.black45)))
                   ],
                 ),
@@ -129,7 +128,8 @@ class MyDrawer extends StatelessWidget {
 }
 
 _launchURL() async {
-  const url = 'https://blogkori.com/';
+  const url =
+      'https://blogkori.com/?utm_source=blogkori_app&utm_medium=app&utm_campaign=about_screen';
   if (await canLaunch(url)) {
     await launch(url);
   } else {
